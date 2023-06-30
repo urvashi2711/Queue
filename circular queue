@@ -1,0 +1,66 @@
+import java.util.Arrays;
+class QueueUsingArray{
+    int[] data;
+    int front;
+    int size;
+    public QueueUsingArray(int cap){
+        this.data=new int[cap];
+        this.front=0;
+        this.size=0;
+    }
+    public boolean isFull(){
+        return size==data.length;
+    }
+    public boolean isEmpty(){
+        return size==0;
+    }
+    public void enqueue(int val) throws Exception{
+        if(isFull()){
+            throw new Exception("queue is full");
+        }
+        int idx=size+front;
+        idx=idx%data.length;
+        data[idx]=val;
+        size++;
+    }
+    public int dequeue() throws Exception{
+        if(isEmpty()){
+            throw new Exception("queue is empty");
+        }
+        int temp=data[front];
+        data[front]=0;
+        front++;
+        front = front%data.length;
+        size--;
+        return temp;
+    }
+    public int getfront() throws Exception{
+        if(isFull()){
+            throw new Exception("queue is empty");
+        }
+        return data[front];
+    }
+    public void display(){
+        System.out.println("items are:");
+        for(int i=0;i<=data.length-1;i++){
+            int idx=i+front;
+            idx=idx%data.length;
+            System.out.print(data[idx]+" ");
+        }
+    }
+    public static void main(String[] args) throws Exception{
+        QueueUsingArray qe=new QueueUsingArray(5);
+        qe.enqueue(4);
+        qe.enqueue(6);
+        qe.enqueue(6);
+        qe.enqueue(6);
+       // qe.enqueue(6);
+       // qe.enqueue(6);
+       // qe.enqueue(6);
+        qe.enqueue(6);
+        qe.dequeue();
+        qe.enqueue(9);
+        //System.out.println(qe.dequeue());
+        qe.display();
+    }
+}
