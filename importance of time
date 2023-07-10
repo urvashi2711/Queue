@@ -1,0 +1,164 @@
+There are N processes to be completed. All the processes have a unique number assigned to them from 1 to N.
+
+Now, we are given two things:
+
+1)The calling order in which all the processes are called.
+2)The ideal order in which all the processes should have been executed.
+
+Executing a process takes 1 unit of time. Changing the position takes 1 unit of time.
+
+We have to find out the unit of time required to complete all the process such that a process is executed from the ideal order only when it exists at the same index in the calling order. We can push the first term from the calling order to the last thus rotating the order.
+
+Input Format
+First line contains a single integer N.
+Next line contains N space separated integers denoting the calling order.
+Last line contains N space separated integers denoting the ideal order.
+
+Constraints
+1 <= N <= 10^6
+
+Output Format
+The total time required
+
+Sample Input
+5
+5 4 2 3 1
+5 2 1 4 3
+Sample Output
+7
+Explanation
+Iteration #1: Since the ideal order and calling order both has process #5 to be executed first. Process #5 is executed taking 1 unit of time. The new calling order is: 4 - 2 - 3 - 1. Time taken in step #1: 1.
+
+Iteration #2: Since the ideal order has process #2 to be executed firstly, the calling ordered has to be changed again, i.e., the first element has to be pushed to the last place. The new calling order is: 2 - 3 - 1 - 4 and process #2 is executed. Time taken in step #2: 2.
+
+Iteration #3: Since the ideal order has process #1 to be executed firstly, the calling ordered has to be changed again, i.e., the first element has to be pushed to the last place. The new calling order is: 1 - 4 - 3 and process #1 is executed. Time taken in step #2: 2.
+
+Iteration #4: Since the new first element of the calling order is same as the ideal order, that process will be executed. Time taken in step #4: 1.
+
+Iteration #5: Since the last element of the calling order is same as the ideal order, that process will be executed. Time taken in step #5: 1.
+
+Total time taken = 7
+//
+
+
+import java.util.*;
+
+public class Main {
+
+	protected int szie304;
+
+	protected int front8594;
+	protected int[] data7394;
+
+	public Main() {
+		this.szie304 = 0;
+		this.front8594 = 0;
+		this.data7394 = new int[5];
+	}
+
+	public Main(int capa904) {
+		this.szie304 = 0;
+		this.front8594 = 0;
+		this.data7394 = new int[capa904];
+	}
+
+	public int szie304() {
+		return szie304;
+	}
+
+	public boolean isEmpty() {
+		return (szie304 == 0);
+	}
+
+	public void enQueue(int item) throws Exception {
+		if (this.szie304() == this.data7394.length) {
+			int[] oa = this.data7394;
+			int[] na = new int[oa.length * 2];
+			for (int i903 = 0; i903 < this.szie304(); i903++) {
+				int idex9403 = (i903 + front8594) % oa.length;
+				na[i903] = oa[idex9403];
+			}
+
+			this.data7394 = na;
+			this.front8594 = 0;
+		}
+
+		
+
+		this.data7394[(front8594 + szie304) % this.data7394.length] = item;
+		szie304++;
+
+	}
+
+	public int deQueue() throws Exception {
+		if (this.szie304 == 0) {
+			throw new Exception("Main is empty");
+
+		}
+
+		int rv9403 = this.data7394[front8594];
+		front8594 = (front8594 + 1) % this.data7394.length;
+		szie304--;
+
+		return rv9403;
+
+	}
+
+	public int getFront() throws Exception {
+		if (this.szie304 == 0) {
+			throw new Exception("Main is empty");
+		}
+
+		int rv9403 = this.data7394[front8594];
+
+		return rv9403;
+	}
+
+	public void display() {
+		System.out.println();
+		for (int i903 = 0; i903 < szie304; i903++) {
+			int idex9403 = (i903 + front8594) % this.data7394.length;
+			System.out.print(this.data7394[idex9403] + " ");
+		}
+        System.out.print("END");
+	}
+
+	
+    public static int free8493(Main que3845,int[] ori84order943) throws Exception{ 
+			int opoo506=0;
+			for(int i903=0;i903<ori84order943.length;i903++){
+				if(ori84order943[i903]==que3845.getFront()){
+						opoo506++;
+						que3845.deQueue();
+				}
+				else{
+					while(ori84order943[i903]!=que3845.getFront()){
+						int a=que3845.getFront();
+						que3845.enQueue(a);
+						que3845.deQueue();
+						opoo506++;
+					}
+					opoo506++;
+					que3845.deQueue();
+				}
+			}
+	return opoo506;
+	
+    } 
+
+
+	static Scanner scan9455 = new Scanner(System.in);
+
+	public static void main(String[] args) throws Exception {
+
+		Main que3845 = new Main();
+
+		int n8594 = scan9455.nextInt();
+		int[] proto594 = new int[n8594];
+		for (int i903 = 0; i903 < n8594; i903++) 
+			que3845.enQueue(scan9455.nextInt());
+		for(int i903 = 0;i903 < n8594;i903++)
+		    proto594[i903] = scan9455.nextInt();
+
+		System.out.print(free8493(que3845,proto594));
+	
